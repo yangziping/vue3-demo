@@ -1,35 +1,52 @@
-@import './base.css';
+/*!* 引入基础样式 *!*/
+/*@import './base.css';*/
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
-}
+/*!* 1. 让根元素和body占满屏幕 *!*/
+/*html, body {*/
+/*  height: 100%;*/
+/*  width: 100%;*/
+/*  margin: 0;*/
+/*  padding: 0;*/
+/*  overflow: hidden; !* 禁用整个页面的滚动条 *!*/
+/*}*/
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
+/*!* 2. 让#app撑满整个屏幕 *!*/
+/*#app {*/
+/*  width: 100vw; !* 宽度=视口宽度 *!*/
+/*  height: 100vh; !* 高度=视口高度 *!*/
+/*  margin: 0; !* 取消居中margin *!*/
+/*  padding: 0; !* 取消内边距，避免内容被挤压 *!*/
+/*  font-weight: normal;*/
+/*  display: flex; !* 使用flex布局，子元素可灵活排列 *!*/
+/*  flex-direction: column; !* 垂直排列子元素 *!*/
+/*}*/
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
+/*!* 3. 链接样式保持不变 *!*/
+/*a,*/
+/*.green {*/
+/*  text-decoration: none;*/
+/*  color: hsla(160, 100%, 37%, 1);*/
+/*  transition: 0.4s;*/
+/*  padding: 3px;*/
+/*}*/
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+/*@media (hover: hover) {*/
+/*  a:hover {*/
+/*    background-color: hsla(160, 100%, 37%, 0.2);*/
+/*  }*/
+/*}*/
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-}
+/*!* 4. 大屏幕适配（修改原1024px媒体查询） *!*/
+/*@media (min-width: 1024px) {*/
+/*  body {*/
+/*    display: flex;*/
+/*    place-items: center;*/
+/*  }*/
+
+/*  #app {*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr 1fr; !* 保持双列布局 *!*/
+/*    !* 取消固定padding，或根据需求调整为小padding *!*/
+/*    !*padding: 0 1rem; !* 可选：保留少量内边距避免内容贴边 *!*!*/
+/*  }*/
+/*}*/

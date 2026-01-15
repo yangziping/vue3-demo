@@ -18,7 +18,15 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "axios": "^1.12.2",
+    "element-plus": "^2.11.7",
+    "lib-flexible": "^0.3.2",
     "pinia": "^3.0.3",
+    "postcss": "^8.5.6",
+    "postcss-pxtorem": "^6.1.0",
+    "tailwindcss": "^4.1.16",
+    "vant": "^3.6.16",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },
@@ -39,6 +47,8 @@
     "eslint-plugin-vue": "~10.3.0",
     "jiti": "^2.4.2",
     "jsdom": "^26.1.0",
+    "less": "^4.4.1",
+    "less-loader": "^12.3.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "3.6.2",
     "typescript": "~5.8.0",
