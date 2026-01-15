@@ -5,12 +5,8 @@
       <div class="logo">系统首页</div>
       <div class="user-info">
         <span class="username">{{ username }}</span>
-        <button @click="handleLogout" class="logout-btn">退出          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="mr-1">
-          <path d="M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-5.5 0a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5  .5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5z"/>
-          <path d="M11 13a1 1 0 1 0 0 2h-1a1 1 0 1 0 0-2h1zm0-11a1 1 0 1 0 0 2h-1a1 1 0 1 0 0-2h1z"/>
-          <path d="M8 12a4 4 0 0 1-4-4V3H1l3.89-3.89A.5.5 0 0 1 4.5 0h6a.5.5 0 0 1 .5.5L11 3v5a4 4 0 0 1-4 4z"/>
-        </svg>
-          退出登录
+        <button @click="handleLogout" class="logout-btn">          
+           退出登录
         </button>
       </div>
     </header>
