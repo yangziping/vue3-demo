@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { useCounterStore } from '@/stores/counter'
+import { useCounterStore } from "@/stores/counter";
 
 // 获取 store 实例
-const counterStore = useCounterStore()
+const counterStore = useCounterStore();
 
 // 重置计数器
 const reset = () => {
   // 方法1：直接修改状态
-  counterStore.count = 0
+  counterStore.count = 0;
 
   // 方法2：使用 $reset() 重置为初始状态
   // counterStore.$reset()
-}
+};
 </script>
 <template>
   <div class="counter">

@@ -60,16 +60,28 @@
           <el-input v-model="registerForm.username" />
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="registerForm.password" type="password" show-password />
+          <el-input
+            v-model="registerForm.password"
+            type="password"
+            show-password
+          />
         </el-form-item>
         <el-form-item label="确认密码" prop="confirmPassword">
-          <el-input v-model="registerForm.confirmPassword" type="password" show-password />
+          <el-input
+            v-model="registerForm.confirmPassword"
+            type="password"
+            show-password
+          />
         </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="registerDialogVisible = false">取消</el-button>
-          <el-button type="primary" :loading="registerLoading" @click="handleRegister(registerFormRef)">
+          <el-button
+            type="primary"
+            :loading="registerLoading"
+            @click="handleRegister(registerFormRef)"
+          >
             注册
           </el-button>
         </span>
@@ -79,182 +91,195 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { User, Lock } from '@element-plus/icons-vue'
-import type { FormInstance, FormRules } from 'element-plus'
-import { ElMessage } from 'element-plus'
-defineOptions({ name: 'LoginPage' })
+import { reactive, ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { User, Lock } from "@element-plus/icons-vue";
+import type { FormInstance, FormRules } from "element-plus";
+import { ElMessage } from "element-plus";
+defineOptions({ name: "LoginPage" });
 
-const router = useRouter()
-const loginFormRef = ref<FormInstance>()
-const loading = ref(false)
-const rememberMe = ref(false)
-const registerDialogVisible = ref(false)
-const registerFormRef = ref<FormInstance>()
-const registerLoading = ref(false)
+const router = useRouter();
+const loginFormRef = ref<FormInstance>();
+const loading = ref(false);
+const rememberMe = ref(false);
+const registerDialogVisible = ref(false);
+const registerFormRef = ref<FormInstance>();
+const registerLoading = ref(false);
 
 const loginForm = reactive({
-  username: '',
-  password: ''
-})
+  username: "",
+  password: "",
+});
 
 const registerForm = reactive({
-  username: '',
-  password: '',
-  confirmPassword: ''
-})
+  username: "",
+  password: "",
+  confirmPassword: "",
+});
 
 const rules = reactive<FormRules>({
   username: [
-    { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+    { required: true, message: "请输入用户名", trigger: "blur" },
+    { min: 3, max: 20, message: "长度在 3 到 20 个字符", trigger: "blur" },
   ],
   password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码不能少于 6 位', trigger: 'blur' }
-  ]
-})
+    { required: true, message: "请输入密码", trigger: "blur" },
+    { min: 6, message: "密码不能少于 6 位", trigger: "blur" },
+  ],
+});
 
 const registerRules = reactive<FormRules>({
   username: [
-    { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+    { required: true, message: "请输入用户名", trigger: "blur" },
+    { min: 3, max: 20, message: "长度在 3 到 20 个字符", trigger: "blur" },
   ],
   password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码不能少于 6 位', trigger: 'blur' }
+    { required: true, message: "请输入密码", trigger: "blur" },
+    { min: 6, message: "密码不能少于 6 位", trigger: "blur" },
   ],
   confirmPassword: [
     {
       required: true,
-      message: '请再次输入密码',
-      trigger: 'blur'
+      message: "请再次输入密码",
+      trigger: "blur",
     },
     {
       validator: (rule, value, callback) => {
         if (!value) {
-          callback(new Error('请再次输入密码'))
+          callback(new Error("请再次输入密码"));
         } else if (value !== registerForm.password) {
-          callback(new Error('两次输入的密码不一致'))
+          callback(new Error("两次输入的密码不一致"));
         } else {
-          callback()
+          callback();
         }
       },
-      trigger: 'blur'
-    }
-  ]
-})
+      trigger: "blur",
+    },
+  ],
+});
 
 const getUsers = (): Array<{ username: string; password: string }> => {
-  const saved = localStorage.getItem('users')
-  if (!saved) return []
+  const saved = localStorage.getItem("users");
+  if (!saved) return [];
   try {
-    const parsed = JSON.parse(saved) as Array<{ username: string; password: string }>
+    const parsed = JSON.parse(saved) as Array<{
+      username: string;
+      password: string;
+    }>;
     if (Array.isArray(parsed)) {
-      return parsed
+      return parsed;
     }
-    return []
+    return [];
   } catch (e) {
-    console.error('parse users error', e)
-    return []
+    console.error("parse users error", e);
+    return [];
   }
-}
-
+};
 
 onMounted(() => {
-  const saved = localStorage.getItem('rememberLogin')
+  const saved = localStorage.getItem("rememberLogin");
   if (saved) {
     try {
-      const info = JSON.parse(saved) as { username?: string; password?: string }
+      const info = JSON.parse(saved) as {
+        username?: string;
+        password?: string;
+      };
       if (info.username) {
-        loginForm.username = info.username
+        loginForm.username = info.username;
       }
       if (info.password) {
-        loginForm.password = info.password
+        loginForm.password = info.password;
       }
-      rememberMe.value = true
+      rememberMe.value = true;
     } catch (e) {
-      console.error('parse rememberLogin error', e)
+      console.error("parse rememberLogin error", e);
     }
   }
-})
+});
 
 const handleLogin = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return
+  if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      loading.value = true
+      loading.value = true;
       setTimeout(() => {
-        loading.value = false
-        const users = getUsers()
+        loading.value = false;
+        const users = getUsers();
         const exists = users.some(
-          (u) => u.username === loginForm.username && u.password === loginForm.password,
-        )
-        if (exists || (loginForm.username === 'admin' && loginForm.password === '123456')) {
-          ElMessage.success('登录成功')
-          localStorage.setItem('isLogin', 'true')
-          localStorage.setItem('userInfo', JSON.stringify({ username: loginForm.username }))
+          (u) =>
+            u.username === loginForm.username &&
+            u.password === loginForm.password,
+        );
+        if (
+          exists ||
+          (loginForm.username === "admin" && loginForm.password === "123456")
+        ) {
+          ElMessage.success("登录成功");
+          localStorage.setItem("isLogin", "true");
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify({ username: loginForm.username }),
+          );
 
           if (rememberMe.value) {
             localStorage.setItem(
-              'rememberLogin',
+              "rememberLogin",
               JSON.stringify({
                 username: loginForm.username,
                 password: loginForm.password,
               }),
-            )
+            );
           } else {
-            localStorage.removeItem('rememberLogin')
+            localStorage.removeItem("rememberLogin");
           }
 
-          router.push('/dashboard')
+          router.push("/dashboard");
         } else {
-          ElMessage.error('用户名或密码错误')
+          ElMessage.error("用户名或密码错误");
         }
-      }, 1000)
+      }, 1000);
     } else {
-      console.log('error submit!', fields)
+      console.log("error submit!", fields);
     }
-  })
-}
+  });
+};
 
 const handleRegister = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return
+  if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      registerLoading.value = true
+      registerLoading.value = true;
       setTimeout(() => {
-        const users = getUsers()
+        const users = getUsers();
         if (users.some((u) => u.username === registerForm.username)) {
-          registerLoading.value = false
-          ElMessage.error('用户名已存在')
-          return
+          registerLoading.value = false;
+          ElMessage.error("用户名已存在");
+          return;
         }
         users.push({
           username: registerForm.username,
-          password: registerForm.password
-        })
-        localStorage.setItem('users', JSON.stringify(users))
-        registerLoading.value = false
-        ElMessage.success('注册成功，请使用新账号登录')
-        registerDialogVisible.value = false
-        loginForm.username = registerForm.username
-        loginForm.password = registerForm.password
-        rememberMe.value = true
+          password: registerForm.password,
+        });
+        localStorage.setItem("users", JSON.stringify(users));
+        registerLoading.value = false;
+        ElMessage.success("注册成功，请使用新账号登录");
+        registerDialogVisible.value = false;
+        loginForm.username = registerForm.username;
+        loginForm.password = registerForm.password;
+        rememberMe.value = true;
         localStorage.setItem(
-          'rememberLogin',
+          "rememberLogin",
           JSON.stringify({
             username: loginForm.username,
-            password: loginForm.password
+            password: loginForm.password,
           }),
-        )
-      }, 500)
+        );
+      }, 500);
     } else {
-      console.log('error submit!', fields)
+      console.log("error submit!", fields);
     }
-  })
-}
+  });
+};
 </script>
 
 <style scoped>
@@ -268,10 +293,10 @@ const handleRegister = async (formEl: FormInstance | undefined) => {
 }
 
 .login-container::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: url('/nidemingzi.jpg') center center / cover no-repeat;
+  background: url("/nidemingzi.jpg") center center / cover no-repeat;
   opacity: 1;
   z-index: 0;
 }

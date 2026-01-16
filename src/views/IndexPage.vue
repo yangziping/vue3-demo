@@ -5,9 +5,7 @@
       <div class="logo">系统首页</div>
       <div class="user-info">
         <span class="username">{{ username }}</span>
-        <button @click="handleLogout" class="logout-btn">          
-           退出登录
-        </button>
+        <button @click="handleLogout" class="logout-btn">退出登录</button>
       </div>
     </header>
 
@@ -41,46 +39,46 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';  // 引入路由
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router"; // 引入路由
 
 // 路由实例
 const router = useRouter();
 
 // 用户名（实际项目中可从登录状态/接口获取）
-const username = ref('');
+const username = ref("");
 
 // 登录时间
-const loginTime = ref('');
+const loginTime = ref("");
 
 // 退出登录
 const handleLogout = () => {
   // 清除登录状态（如 localStorage）
-  localStorage.removeItem('userInfo');
-  localStorage.removeItem('isLogin');
+  localStorage.removeItem("userInfo");
+  localStorage.removeItem("isLogin");
   // 跳回登录页
-  router.push('/login');
+  router.push("/login");
 };
 
 onMounted(() => {
   // 从本地存储获取登录信息（登录时应保存）
-  const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+  const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
   if (userInfo.username) {
     username.value = userInfo.username;
   } else {
     // 若未登录，强制跳回登录页
-    router.push('/login');
+    router.push("/login");
   }
 
   // 格式化当前登录时间
   const now = new Date();
-  loginTime.value = now.toLocaleString('zh-CN', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
+  loginTime.value = now.toLocaleString("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
   });
 });
 </script>

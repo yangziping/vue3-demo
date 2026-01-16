@@ -1,32 +1,31 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-export const useCounterStore = defineStore('counter', {
+export const useCounterStore = defineStore("counter", {
   state: () => ({
     count: 0,
-    name: '计数器',
+    name: "计数器",
   }),
 
   getters: {
     doubleCount: (state) => state.count * 2,
 
     doubleCountPlusOne(): number {
-      return this.doubleCount + 1
+      return this.doubleCount + 1;
     },
   },
 
   // 方法（类似 Vuex 的 mutations + actions，Pinia 中统一用 actions）
   actions: {
     increment() {
-      this.count++
+      this.count++;
     },
     decrement() {
-      this.count--
+      this.count--;
     },
     // 支持异步操作
     async incrementAsync() {
-      await new Promise((resolve) => setTimeout(resolve, 100))
-      this.increment()
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      this.increment();
     },
   },
-
-})
+});

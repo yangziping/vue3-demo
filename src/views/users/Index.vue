@@ -17,10 +17,20 @@
         <el-table-column prop="createdAt" label="创建时间" />
         <el-table-column label="操作" width="160">
           <template #default="scope">
-            <el-button type="primary" link size="small" @click="openEdit(scope.row)">
+            <el-button
+              type="primary"
+              link
+              size="small"
+              @click="openEdit(scope.row)"
+            >
               编辑
             </el-button>
-            <el-button type="danger" link size="small" @click="removeUser(scope.row.username)">
+            <el-button
+              type="danger"
+              link
+              size="small"
+              @click="removeUser(scope.row.username)"
+            >
               删除
             </el-button>
           </template>
@@ -59,72 +69,72 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
-import type { FormInstance, FormRules } from 'element-plus'
-import { ElMessageBox, ElMessage } from 'element-plus'
-defineOptions({ name: 'UsersIndex' })
+import { ref, reactive, onMounted } from "vue";
+import type { FormInstance, FormRules } from "element-plus";
+import { ElMessageBox, ElMessage } from "element-plus";
+defineOptions({ name: "UsersIndex" });
 
 type UserItem = {
-  username: string
-  password: string
-  age?: string
-  gender?: string
-  createdAt: string
-}
+  username: string;
+  password: string;
+  age?: string;
+  gender?: string;
+  createdAt: string;
+};
 
-const STORAGE_KEY = 'users'
+const STORAGE_KEY = "users";
 
-const users = ref<UserItem[]>([])
-const dialogVisible = ref(false)
-const dialogTitle = ref('新增用户')
-const isEdit = ref(false)
-const formRef = ref<FormInstance>()
+const users = ref<UserItem[]>([]);
+const dialogVisible = ref(false);
+const dialogTitle = ref("新增用户");
+const isEdit = ref(false);
+const formRef = ref<FormInstance>();
 
 const form = reactive({
-  username: '',
-  password: '',
-  age: '',
-  gender: '',
-})
+  username: "",
+  password: "",
+  age: "",
+  gender: "",
+});
 
 const rules = reactive<FormRules>({
   username: [
-    { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' },
+    { required: true, message: "请输入用户名", trigger: "blur" },
+    { min: 3, max: 20, message: "长度在 3 到 20 个字符", trigger: "blur" },
   ],
   password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码不能少于 6 位', trigger: 'blur' },
+    { required: true, message: "请输入密码", trigger: "blur" },
+    { min: 6, message: "密码不能少于 6 位", trigger: "blur" },
   ],
-  age: [{ required: true, message: '请输入年龄', trigger: 'blur' }],
-  gender: [{ required: true, message: '请选择性别', trigger: 'change' }],
-})
+  age: [{ required: true, message: "请输入年龄", trigger: "blur" }],
+  gender: [{ required: true, message: "请选择性别", trigger: "change" }],
+});
 
 const loadUsers = () => {
-  const saved = localStorage.getItem(STORAGE_KEY)
+  const saved = localStorage.getItem(STORAGE_KEY);
   if (!saved) {
-    users.value = []
-    return
+    users.value = [];
+    return;
   }
   try {
     const parsed = JSON.parse(saved) as Array<{
-      username: string
-      password: string
-      age?: string
-      gender?: string
-      createdAt?: string
-    }>
+      username: string;
+      password: string;
+      age?: string;
+      gender?: string;
+      createdAt?: string;
+    }>;
     users.value = parsed.map((u) => ({
       username: u.username,
       password: u.password,
-      age: u.age || '',
-      gender: u.gender || '',
+      age: u.age || "",
+      gender: u.gender || "",
       createdAt: u.createdAt || new Date().toLocaleString(),
-    }))
+    }));
   } catch {
-    users.value = []
+    users.value = [];
   }
-}
+};
 
 const saveUsers = () => {
   const data = users.value.map((u) => ({
@@ -133,50 +143,50 @@ const saveUsers = () => {
     age: u.age,
     gender: u.gender,
     createdAt: u.createdAt,
-  }))
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-}
+  }));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+};
 
 const resetForm = () => {
-  form.username = ''
-  form.password = ''
-  form.age = ''
-  form.gender = ''
-}
+  form.username = "";
+  form.password = "";
+  form.age = "";
+  form.gender = "";
+};
 
 const openCreate = () => {
-  dialogTitle.value = '新增用户'
-  isEdit.value = false
-  resetForm()
-  dialogVisible.value = true
-}
+  dialogTitle.value = "新增用户";
+  isEdit.value = false;
+  resetForm();
+  dialogVisible.value = true;
+};
 
 const openEdit = (row: UserItem) => {
-  dialogTitle.value = '编辑用户'
-  isEdit.value = true
-  form.username = row.username
-  form.password = row.password
-  form.age = row.age || ''
-  form.gender = row.gender || ''
-  dialogVisible.value = true
-}
+  dialogTitle.value = "编辑用户";
+  isEdit.value = true;
+  form.username = row.username;
+  form.password = row.password;
+  form.age = row.age || "";
+  form.gender = row.gender || "";
+  dialogVisible.value = true;
+};
 
 const submitForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
+  if (!formEl) return;
   formEl.validate((valid) => {
-    if (!valid) return
+    if (!valid) return;
     if (isEdit.value) {
-      const index = users.value.findIndex((u) => u.username === form.username)
+      const index = users.value.findIndex((u) => u.username === form.username);
       if (index !== -1) {
-        users.value[index].password = form.password
-        users.value[index].age = form.age
-        users.value[index].gender = form.gender
+        users.value[index].password = form.password;
+        users.value[index].age = form.age;
+        users.value[index].gender = form.gender;
       }
-      ElMessage.success('修改成功')
+      ElMessage.success("修改成功");
     } else {
       if (users.value.some((u) => u.username === form.username)) {
-        ElMessage.error('用户名已存在')
-        return
+        ElMessage.error("用户名已存在");
+        return;
       }
       users.value.push({
         username: form.username,
@@ -184,30 +194,30 @@ const submitForm = (formEl: FormInstance | undefined) => {
         age: form.age,
         gender: form.gender,
         createdAt: new Date().toLocaleString(),
-      })
-      ElMessage.success('新增成功')
+      });
+      ElMessage.success("新增成功");
     }
-    saveUsers()
-    dialogVisible.value = false
-  })
-}
+    saveUsers();
+    dialogVisible.value = false;
+  });
+};
 
 const removeUser = (username: string) => {
-  if (!username) return
-  ElMessageBox.confirm(`确定删除用户 ${username} 吗？`, '提示', {
-    type: 'warning',
+  if (!username) return;
+  ElMessageBox.confirm(`确定删除用户 ${username} 吗？`, "提示", {
+    type: "warning",
   })
     .then(() => {
-      users.value = users.value.filter((u) => u.username !== username)
-      saveUsers()
-      ElMessage.success('删除成功')
+      users.value = users.value.filter((u) => u.username !== username);
+      saveUsers();
+      ElMessage.success("删除成功");
     })
-    .catch(() => {})
-}
+    .catch(() => {});
+};
 
 onMounted(() => {
-  loadUsers()
-})
+  loadUsers();
+});
 </script>
 
 <style scoped>

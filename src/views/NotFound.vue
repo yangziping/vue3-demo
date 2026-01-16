@@ -9,26 +9,26 @@
       </template>
     </el-result>
   </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { useRouter } from 'vue-router'
-  defineOptions({ name: 'NotFoundPage' })
-  const router = useRouter()
-  const goHome = () => {
-    const isAuthenticated = localStorage.getItem('isLogin') === 'true'
-    router.push(isAuthenticated ? '/dashboard' : '/login')
-  }
-  const goLogin = () => {
-    router.push('/login')
-  }
-  </script>
-  
-  <style scoped>
-  .notfound {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-  </style>
+</template>
+
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+defineOptions({ name: "NotFoundPage" });
+const router = useRouter();
+const goHome = () => {
+  const isAuthenticated = localStorage.getItem("isLogin") === "true";
+  router.push(isAuthenticated ? "/dashboard" : "/login");
+};
+const goLogin = () => {
+  router.push("/login");
+};
+</script>
+
+<style scoped>
+.notfound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+</style>

@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <!-- <main>
@@ -11,7 +10,7 @@
 </template>
 
 <style lang="less" scoped>
-@import '../theme/custom.less';
+@import "../theme/custom.less";
 .father {
   .son {
     color: @primary;

@@ -21,6 +21,10 @@
             <el-icon><Document /></el-icon>
             <span>文章管理</span>
           </el-menu-item>
+          <el-menu-item index="/blog">
+            <el-icon><Document /></el-icon>
+            <span>博客</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-container>
@@ -29,7 +33,9 @@
             <span>后台管理系统</span>
             <div class="header-right">
               <span class="username" v-if="username">欢迎，{{ username }}</span>
-              <el-button type="danger" size="small" @click="handleLogout">退出登录</el-button>
+              <el-button type="danger" size="small" @click="handleLogout"
+                >退出登录</el-button
+              >
             </div>
           </div>
         </el-header>
@@ -42,30 +48,30 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { Menu, Document } from '@element-plus/icons-vue'
-import { ref, onMounted } from 'vue'
+import { useRouter } from "vue-router";
+import { Menu, Document } from "@element-plus/icons-vue";
+import { ref, onMounted } from "vue";
 
-const router = useRouter()
-const username = ref('')
+const router = useRouter();
+const username = ref("");
 
 onMounted(() => {
-  const userInfoStr = localStorage.getItem('userInfo')
+  const userInfoStr = localStorage.getItem("userInfo");
   if (userInfoStr) {
     try {
-      const userInfo = JSON.parse(userInfoStr)
-      username.value = userInfo.username || ''
+      const userInfo = JSON.parse(userInfoStr);
+      username.value = userInfo.username || "";
     } catch (e) {
-      console.error('Failed to parse userInfo', e)
+      console.error("Failed to parse userInfo", e);
     }
   }
-})
+});
 
 const handleLogout = () => {
-  localStorage.removeItem('isLogin')
-  localStorage.removeItem('userInfo')
-  router.push('/login')
-}
+  localStorage.removeItem("isLogin");
+  localStorage.removeItem("userInfo");
+  router.push("/login");
+};
 </script>
 
 <style scoped>
