@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { useCounterStore } from '@/stores/counter'
-import { storeToRefs } from 'pinia'
 
 // 获取 store 实例
 const counterStore = useCounterStore()
-
-// 将状态转为响应式的 ref（解构时保持响应性）
-const { count } = storeToRefs(counterStore)
 
 // 重置计数器
 const reset = () => {

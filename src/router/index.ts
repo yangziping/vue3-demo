@@ -1,25 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import HomeView from '../views/HomeView.vue'
+import BasicLayout from '@/layout/BasicLayout.vue'
+
 const routes = [
   {
-    path: '/home',
-    name: 'home',
-    component: () => import('../views/HomeView.vue'),
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/AboutView.vue'),
-  },
-  {
-    path: '/counter',
-    name: 'counter',
-    component: () => import('../views/CounterView.vue'),
-  },
-  {
-    path: '/indexPage',
-    name: 'indexPage',
-    component: () => import('../views/IndexPage.vue'),
+    path: '/',
+    redirect: '/login',
   },
   {
     path: '/login',
@@ -28,19 +13,46 @@ const routes = [
   },
   {
     path: '/',
-    name: 'index',
-    component: () => import('../views/Login.vue'),
+    component: BasicLayout,
+    children: [
+      {
+        path: 'dashboard',
+        name: 'dashboard',
+        component: () => import('../views/dashboard/Index.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'users',
+        name: 'users',
+        component: () => import('../views/users/Index.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'articles',
+        name: 'articles',
+        component: () => import('../views/articles/Index.vue'),
+        meta: { requiresAuth: true }
+      },
+    ],
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: () => import('../views/NotFound.vue'),
   },
 ]
+
 const router = createRouter({
   history: createWebHistory(),
   routes: routes,
 })
 
 router.beforeEach((to, from, next) => {
+  // 简单的权限控制示例
   if (to.meta.requiresAuth) {
-    const userInfo = localStorage.getItem('userInfo')
-    if (userInfo) {
+    // 假设登录后会在 localStorage 存储 token 或 userInfo
+    const isAuthenticated = localStorage.getItem('isLogin') === 'true'
+    if (isAuthenticated) {
       next()
     } else {
       next('/login')

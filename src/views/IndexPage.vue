@@ -57,6 +57,7 @@ const loginTime = ref('');
 const handleLogout = () => {
   // 清除登录状态（如 localStorage）
   localStorage.removeItem('userInfo');
+  localStorage.removeItem('isLogin');
   // 跳回登录页
   router.push('/login');
 };
